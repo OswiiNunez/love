@@ -1,0 +1,916 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te amooo coyazon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;-moz-user-select:none}
+        html{scroll-behavior:smooth}
+        body{min-height:100vh;background:#0a0408;font-family:'Quicksand',sans-serif;overflow-x:hidden;color:#fff;position:relative}
+
+        .bg-gradient{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#1a0a12,#0e0515,#0a0818,#050210,#12060d,#0d0310);background-size:600% 600%;animation:bgMove 25s ease infinite}
+        @keyframes bgMove{0%{background-position:0% 0%}25%{background-position:100% 50%}50%{background-position:50% 100%}75%{background-position:0% 50%}100%{background-position:0% 0%}}
+
+        /* Nebula layers */
+        .nebula{position:fixed;inset:0;z-index:0;pointer-events:none}
+        .nebula::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 30%,rgba(100,20,80,0.08),transparent),radial-gradient(ellipse 60% 40% at 75% 70%,rgba(30,10,80,0.06),transparent);animation:nebulaDrift 30s ease-in-out infinite alternate}
+        .nebula::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 60% 20%,rgba(196,69,105,0.04),transparent),radial-gradient(ellipse 70% 30% at 30% 80%,rgba(100,40,150,0.04),transparent);animation:nebulaDrift2 35s ease-in-out infinite alternate}
+        @keyframes nebulaDrift{0%{opacity:0.6;transform:scale(1) translate(0,0)}100%{opacity:1;transform:scale(1.1) translate(20px,-15px)}}
+        @keyframes nebulaDrift2{0%{opacity:0.4;transform:scale(1.05) translate(0,0)}100%{opacity:0.8;transform:scale(1) translate(-15px,20px)}}
+
+        .orb{position:fixed;border-radius:50%;filter:blur(110px);opacity:0.1;pointer-events:none;z-index:0}
+        .orb-1{width:650px;height:650px;background:radial-gradient(circle,#c44569,transparent 70%);top:-15%;left:-10%;animation:orbDrift1 18s ease-in-out infinite alternate}
+        .orb-2{width:550px;height:550px;background:radial-gradient(circle,#6b2fa0,transparent 70%);top:35%;right:-12%;animation:orbDrift2 22s ease-in-out infinite alternate}
+        .orb-3{width:600px;height:600px;background:radial-gradient(circle,#d4a5a5,transparent 70%);bottom:-15%;left:25%;animation:orbDrift3 20s ease-in-out infinite alternate}
+        .orb-4{width:400px;height:400px;background:radial-gradient(circle,#893168,transparent 70%);top:60%;left:10%;animation:orbDrift1 25s ease-in-out infinite alternate-reverse}
+        .orb-5{width:300px;height:300px;background:radial-gradient(circle,#4a1a6b,transparent 70%);top:20%;left:50%;animation:orbDrift2 28s ease-in-out infinite alternate-reverse}
+        @keyframes orbDrift1{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,-40px) scale(1.15)}}
+        @keyframes orbDrift2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-50px,50px) scale(1.1)}}
+        @keyframes orbDrift3{0%{transform:translate(0,0) scale(0.95)}100%{transform:translate(40px,-30px) scale(1.1)}}
+
+        .stars{position:fixed;inset:0;pointer-events:none;z-index:1}
+        .star{position:absolute;background:rgba(255,220,200,0.85);border-radius:50%;animation:twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s)}
+        @keyframes twinkle{0%,100%{opacity:0.1;transform:scale(0.7)}50%{opacity:1;transform:scale(1.3)}}
+
+        /* Constelacion Libra */
+        .constellation{position:fixed;pointer-events:none;z-index:1;opacity:0.35;animation:constellationFade 8s ease-in-out infinite alternate}
+        @keyframes constellationFade{0%{opacity:0.2}100%{opacity:0.45}}
+        .constellation svg{width:100%;height:100%}
+        .constellation line{stroke:rgba(255,255,255,0.6);stroke-width:0.8;stroke-dasharray:3 2}
+        .constellation circle{fill:rgba(255,255,255,0.9)}
+        .constellation .star-glow{fill:none;stroke:rgba(255,255,255,0.3);stroke-width:2}
+        .libra-label{font-family:'Lora',serif;fill:rgba(255,255,255,0.3);font-size:6px;font-style:italic}
+
+        /* Cometas mejorados */
+        .comet{position:fixed;pointer-events:none;z-index:1;width:3px;height:3px;background:#fff;border-radius:50%;opacity:0;animation:cometFly var(--dur,6s) linear infinite var(--delay,0s);box-shadow:0 0 6px 2px rgba(255,255,255,0.5)}
+        .comet::before{content:'';position:absolute;top:50%;left:50%;width:100px;height:1.5px;background:linear-gradient(90deg,rgba(255,255,255,0.9),rgba(232,168,124,0.6),rgba(196,69,105,0.3),transparent);transform-origin:left center;transform:translateY(-50%) rotate(var(--angle,215deg));border-radius:2px}
+        .comet::after{content:'';position:absolute;top:50%;left:50%;width:60px;height:3px;background:linear-gradient(90deg,rgba(255,255,255,0.3),transparent);transform-origin:left center;transform:translateY(-50%) rotate(var(--angle,215deg));border-radius:2px;filter:blur(1px)}
+        @keyframes cometFly{0%{opacity:0;transform:translate(0,0)}2%{opacity:1}12%{opacity:0.9}18%{opacity:0;transform:translate(var(--dx,-400px),var(--dy,400px))}100%{opacity:0;transform:translate(var(--dx,-400px),var(--dy,400px))}}
+
+        /* Shooting stars - extra */
+        .shooting-star{position:fixed;pointer-events:none;z-index:1;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0;animation:shootingStar var(--dur,3s) linear infinite var(--delay,0s)}
+        .shooting-star::before{content:'';position:absolute;top:0;left:0;width:50px;height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.8),transparent);transform:rotate(var(--angle,220deg));transform-origin:left}
+        @keyframes shootingStar{0%{opacity:0;transform:translate(0,0)}5%{opacity:1}15%{opacity:0;transform:translate(var(--dx,-200px),var(--dy,200px))}100%{opacity:0}}
+
+        .particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+        .particle{position:absolute;border-radius:50%;animation:particleFloat var(--dur,12s) ease-in-out infinite var(--delay,0s)}
+        @keyframes particleFloat{0%,100%{transform:translateY(0) translateX(0);opacity:0.2}25%{transform:translateY(-30vh) translateX(15px);opacity:0.5}50%{transform:translateY(-60vh) translateX(-10px);opacity:0.3}75%{transform:translateY(-85vh) translateX(8px);opacity:0.15}100%{transform:translateY(-100vh);opacity:0}}
+
+        .petal{position:fixed;pointer-events:none;z-index:1;opacity:0;border-radius:50% 0 50% 50%;animation:fallPetal var(--dur,12s) linear infinite var(--delay,0s)}
+        @keyframes fallPetal{0%{opacity:0;transform:translateY(-5vh) rotate(0deg)}8%{opacity:0.4}50%{transform:translateY(50vh) rotate(200deg) translateX(30px)}100%{opacity:0;transform:translateY(105vh) rotate(400deg) translateX(-20px)}}
+
+        .main-content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center}
+        .hero-section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+
+        /* Corazon mejorado */
+        .central-heart{position:relative;margin-bottom:35px;width:150px;height:150px;display:flex;align-items:center;justify-content:center}
+        .heart-outer-ring{position:absolute;inset:-5px;border:1.5px solid rgba(196,69,105,0.12);border-radius:50%;animation:heartRingSpin 12s linear infinite}
+        .heart-outer-ring::before{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;background:#e8a87c;border-radius:50%;box-shadow:0 0 12px #e8a87c,0 0 25px rgba(232,168,124,0.4)}
+        @keyframes heartRingSpin{to{transform:rotate(360deg)}}
+        .heart-inner-ring{position:absolute;inset:12px;border:1px dashed rgba(232,168,124,0.1);border-radius:50%;animation:heartRingSpin 8s linear infinite reverse}
+        .heart-pulse-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1.5px solid rgba(196,69,105,0.15);border-radius:50%;animation:pulseRing 2.5s ease-out infinite}
+        .heart-pulse-ring:nth-child(4){animation-delay:0.8s}
+        .heart-pulse-ring:nth-child(5){animation-delay:1.6s}
+        @keyframes pulseRing{0%{width:60px;height:60px;opacity:0.5}100%{width:170px;height:170px;opacity:0}}
+        .heart-svg{width:85px;height:85px;animation:heartbeat 1.5s ease-in-out infinite;filter:drop-shadow(0 0 25px rgba(196,69,105,0.7)) drop-shadow(0 0 60px rgba(196,69,105,0.3));cursor:pointer;transition:transform 0.3s;position:relative;z-index:2}
+        .heart-svg:hover{transform:scale(1.15)}
+        @keyframes heartbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.16)}28%{transform:scale(1)}42%{transform:scale(1.1)}}
+        .heart-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:55px;height:55px;background:radial-gradient(circle,rgba(196,69,105,0.35),transparent 70%);border-radius:50%;animation:glowPulse 2s ease-in-out infinite;z-index:1}
+        @keyframes glowPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.5}50%{transform:translate(-50%,-50%) scale(2);opacity:0.15}}
+
+        .title{font-family:'Dancing Script',cursive;font-size:clamp(3.5rem,10vw,6rem);text-align:center;margin-bottom:10px;background:linear-gradient(135deg,#f5c6c6 0%,#e8a87c 30%,#d4a5a5 60%,#c44569 100%);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease-in-out infinite;font-weight:700;letter-spacing:1px;line-height:1.2}
+        @keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .subtitle{font-family:'Lora',serif;font-style:italic;font-size:1.15rem;color:rgba(232,168,124,0.5);text-align:center;margin-bottom:28px;letter-spacing:2px}
+        .decorative-line{width:140px;height:1px;background:linear-gradient(90deg,transparent,rgba(196,69,105,0.4),rgba(232,168,124,0.3),transparent);margin:16px 0}
+
+        .love-message{max-width:580px;text-align:center;padding:38px 32px;background:linear-gradient(145deg,rgba(196,69,105,0.04),rgba(15,8,12,0.5));border-radius:20px;backdrop-filter:blur(12px);border:1px solid rgba(196,69,105,0.08);margin-bottom:25px;box-shadow:0 20px 50px rgba(0,0,0,0.15)}
+        .love-message p{font-family:'Quicksand',sans-serif;color:rgba(255,228,218,0.82);font-size:1.02rem;line-height:1.95;font-weight:300;margin-bottom:12px}
+        .love-message .highlight{color:#e8a87c;font-weight:600}
+        .small-hearts{display:flex;gap:18px;margin:20px 0}
+        .mini-heart{width:20px;height:20px;fill:#c44569;opacity:0.6;animation:bounceH 1.3s ease-in-out infinite}
+        .mini-heart:nth-child(2){animation-delay:0.15s;fill:#d4a5a5}
+        .mini-heart:nth-child(3){animation-delay:0.3s;fill:#e8a87c}
+        @keyframes bounceH{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-9px) scale(1.08)}}
+
+        /* SVG Rosa */
+        .rose-container{margin:12px 0;display:flex;flex-direction:column;align-items:center;gap:10px}
+        .rose-hint{font-family:'Dancing Script',cursive;font-size:1.35rem;color:rgba(232,168,124,0.7);letter-spacing:1px;font-weight:500;animation:hintPulse 2s ease-in-out infinite;text-shadow:0 0 18px rgba(232,168,124,0.4)}
+        @keyframes hintPulse{0%,100%{opacity:0.5;transform:translateY(0) scale(1)}50%{opacity:1;transform:translateY(-5px) scale(1.06)}}
+        .rose-wrapper{position:relative;width:200px;height:240px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .rose-glow{position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,rgba(196,69,105,0.28),rgba(232,168,124,0.1),transparent 65%);opacity:0.3;transition:all 0.6s;animation:roseGlowPulse 3s ease-in-out infinite;pointer-events:none}
+        .rose-wrapper:hover .rose-glow{opacity:0.65;transform:scale(1.12)}
+        @keyframes roseGlowPulse{0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.08);opacity:0.5}}
+        .rose-svg{width:200px;height:240px;overflow:visible;transition:filter 0.6s,transform 0.4s;filter:drop-shadow(0 4px 22px rgba(196,69,105,0.28))}
+        .rose-wrapper:hover .rose-svg{transform:scale(1.05);filter:drop-shadow(0 6px 32px rgba(196,69,105,0.5))}
+        .rose-svg #op,.rose-svg #mp,.rose-svg #ip{transition:transform 1.5s cubic-bezier(0.34,1.56,0.64,1)}
+        .rose-svg #op{transform-origin:100px 100px;transform:scale(0.68)}
+        .rose-svg #mp{transform-origin:100px 100px;transform:scale(0.52);transition-delay:0.08s}
+        .rose-svg #ip{transform-origin:100px 100px;transform:scale(0.38);transition-delay:0.16s}
+        .rose-svg.bloomed #op,.rose-svg.bloomed #mp,.rose-svg.bloomed #ip{transform:scale(1)}
+        .rose-svg.bloomed{filter:drop-shadow(0 0 22px rgba(196,69,105,0.8)) drop-shadow(0 0 50px rgba(232,168,124,0.35));animation:roseBloomed 0.9s ease-out forwards}
+        @keyframes roseBloomed{0%{transform:scale(1)}40%{transform:scale(1.09)}70%{transform:scale(0.98)}100%{transform:scale(1.03)}}
+
+
+
+        /* Rose modal mejorado */
+        .rose-modal{position:fixed;inset:0;background:rgba(5,2,4,0.92);display:flex;align-items:center;justify-content:center;z-index:10000;opacity:0;visibility:hidden;transition:all 0.6s;backdrop-filter:blur(15px)}
+        .rose-modal.active{opacity:1;visibility:visible}
+        .rose-modal-content{background:linear-gradient(145deg,rgba(30,12,22,0.95),rgba(20,8,16,0.98));padding:55px 42px;border-radius:28px;text-align:center;max-width:420px;margin:20px;transform:scale(0.5) translateY(50px) rotate(-2deg);transition:transform 0.8s cubic-bezier(0.34,1.56,0.64,1);border:1px solid rgba(196,69,105,0.2);position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(196,69,105,0.15),0 0 0 1px rgba(232,168,124,0.05),inset 0 1px 0 rgba(255,200,200,0.03)}
+        .rose-modal.active .rose-modal-content{transform:scale(1) translateY(0) rotate(0deg)}
+        .modal-glow{position:absolute;inset:-80%;background:conic-gradient(from 0deg,rgba(196,69,105,0.08),rgba(232,168,124,0.04),rgba(100,30,80,0.06),rgba(196,69,105,0.08));animation:rotateGlow 12s linear infinite}
+        @keyframes rotateGlow{to{transform:rotate(360deg)}}
+        .modal-sparkles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+        .modal-sparkle{position:absolute;width:2px;height:2px;background:rgba(232,168,124,0.6);border-radius:50%;animation:modalSparkle 3s ease-in-out infinite}
+        @keyframes modalSparkle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}
+        .modal-heart-icon{font-size:2.5rem;margin-bottom:18px;position:relative;z-index:2;animation:modalHeartBeat 1.5s ease-in-out infinite}
+        @keyframes modalHeartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+        .rose-modal-text{font-family:'Quicksand',sans-serif;color:rgba(255,225,215,0.92);font-size:1.3rem;line-height:2;margin-bottom:30px;position:relative;z-index:2;font-weight:500;letter-spacing:0.5px}
+        .rose-modal-subtext{font-family:'Quicksand',sans-serif;color:rgba(232,168,124,0.5);font-size:0.85rem;margin-bottom:24px;position:relative;z-index:2;letter-spacing:1.5px}
+        .rose-modal-close{background:linear-gradient(135deg,#c44569,#893168);border:none;padding:12px 32px;border-radius:50px;color:white;font-family:'Quicksand',sans-serif;font-size:0.9rem;cursor:pointer;transition:all 0.4s;position:relative;z-index:2;font-weight:500;letter-spacing:1px;box-shadow:0 8px 25px rgba(196,69,105,0.3)}
+        .rose-modal-close:hover{transform:scale(1.08) translateY(-2px);box-shadow:0 12px 35px rgba(196,69,105,0.5)}
+        .modal-border-glow{position:absolute;inset:-1px;border-radius:28px;background:linear-gradient(135deg,rgba(196,69,105,0.3),rgba(232,168,124,0.15),rgba(196,69,105,0.3));z-index:-1;animation:borderGlow 4s ease-in-out infinite}
+        @keyframes borderGlow{0%,100%{opacity:0.3}50%{opacity:0.7}}
+
+        .section-divider{width:100%;padding:70px 20px 30px;text-align:center}
+        .section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5.5vw,3rem);background:linear-gradient(135deg,#f5c6c6,#e8a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;font-weight:600}
+        .section-subtitle{font-family:'Lora',serif;font-style:italic;color:rgba(232,168,124,0.3);font-size:0.9rem;letter-spacing:2px}
+        .section-line{width:50px;height:1px;background:linear-gradient(90deg,transparent,rgba(196,69,105,0.35),transparent);margin:10px auto}
+
+        /* Carrusel */
+        .carousel-section{width:100%;padding:30px 0;overflow:hidden}
+        .carousel-track{display:flex;gap:0;animation:scrollCarousel 50s linear infinite;width:max-content}
+        .carousel-track:hover{animation-play-state:running}
+        .carousel-item{flex-shrink:0;width:260px;height:260px;position:relative;overflow:hidden;border-radius:12px;margin:0 6px;box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+        .carousel-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease,filter 0.4s}
+        .carousel-item:hover img{transform:scale(1.06);filter:brightness(1.05)}
+        .carousel-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(10,4,8,0.5));pointer-events:none;border-radius:12px}
+        @keyframes scrollCarousel{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+        /* Polaroid */
+        .polaroid-section{width:100%;padding:30px 20px}
+        .polaroid-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:26px;max-width:1000px;margin:0 auto}
+        .polaroid{background:linear-gradient(145deg,#fefaf8,#f5ede8);padding:8px 8px 36px;width:230px;box-shadow:0 10px 35px rgba(0,0,0,0.25);transform:rotate(var(--rot,0deg));transition:all 0.6s cubic-bezier(0.25,0.46,0.45,0.94);cursor:pointer;border-radius:4px}
+        .polaroid:hover{transform:rotate(0deg) scale(1.06) translateY(-8px);box-shadow:0 20px 50px rgba(196,69,105,0.15);z-index:10}
+        .polaroid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;border-radius:2px}
+        .polaroid .caption{font-family:'Quicksand',sans-serif;color:#4a1e2d;text-align:center;font-size:0.85rem;margin-top:8px;font-weight:500;line-height:1.3}
+
+        /* Mosaic -> Carrusel Nosotros */
+        .carousel-section-2{width:100%;padding:30px 0;overflow:hidden}
+        .carousel-track-2{display:flex;gap:0;animation:scrollCarousel2 45s linear infinite;width:max-content}
+        @keyframes scrollCarousel2{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+
+        /* Reasons */
+        .reasons-section{width:100%;padding:20px 20px 60px}
+        .reasons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;max-width:880px;margin:0 auto}
+        .reason-card{background:linear-gradient(145deg,rgba(196,69,105,0.05),rgba(15,8,12,0.45));border:1px solid rgba(196,69,105,0.08);border-radius:16px;padding:26px 22px;backdrop-filter:blur(8px);transition:all 0.5s;opacity:0;transform:translateY(20px);animation:cardIn 0.6s ease forwards;animation-delay:var(--delay,0s);animation-play-state:paused}
+        .reason-card.visible{animation-play-state:running}
+        .reason-card:hover{transform:translateY(-4px) scale(1.02);border-color:rgba(196,69,105,0.2);box-shadow:0 12px 35px rgba(196,69,105,0.08)}
+        @keyframes cardIn{to{opacity:1;transform:translateY(0)}}
+        .reason-number{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:600;background:linear-gradient(135deg,#c44569,#e8a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;line-height:1}
+        .reason-card p{font-family:'Quicksand',sans-serif;color:rgba(255,225,215,0.7);font-size:0.95rem;line-height:1.6;font-weight:300}
+
+        /* Counter mejorado */
+        .love-counter{background:linear-gradient(145deg,rgba(196,69,105,0.06),rgba(12,6,10,0.5));padding:45px 40px;border-radius:24px;margin:50px 20px;border:1px solid rgba(196,69,105,0.1);text-align:center;backdrop-filter:blur(12px);position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+        .love-counter::before{content:'';position:absolute;inset:-2px;border-radius:24px;background:linear-gradient(135deg,rgba(196,69,105,0.15),transparent,rgba(232,168,124,0.1));z-index:-1;animation:counterBorderGlow 5s ease-in-out infinite}
+        @keyframes counterBorderGlow{0%,100%{opacity:0.3}50%{opacity:0.7}}
+        .counter-title{font-family:'Dancing Script',cursive;font-size:1.8rem;color:rgba(232,168,124,0.8);margin-bottom:25px;font-weight:500;letter-spacing:1px}
+        .counter-display{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+        .counter-item{text-align:center;padding:15px 20px;background:rgba(196,69,105,0.04);border-radius:16px;border:1px solid rgba(196,69,105,0.06);min-width:80px;transition:all 0.3s}
+        .counter-item:hover{border-color:rgba(196,69,105,0.15);transform:translateY(-3px);box-shadow:0 8px 20px rgba(196,69,105,0.08)}
+        .counter-number{font-family:'Playfair Display',serif;font-size:2.8rem;background:linear-gradient(135deg,#f5c6c6,#e8a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;line-height:1.1}
+        .counter-label{color:rgba(232,168,124,0.4);font-size:0.7rem;text-transform:uppercase;letter-spacing:2.5px;margin-top:6px;font-family:'Quicksand',sans-serif}
+        .counter-heart{position:absolute;opacity:0.04;font-size:8rem;top:50%;left:50%;transform:translate(-50%,-50%)}
+
+        /* Twilight Sparkle section */
+        .twilight-section{margin:50px 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:15px}
+
+        /* Ponys decorativos */
+        .ponys-deco{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+        .pony-side{position:absolute;width:140px;height:auto;opacity:0.35;filter:drop-shadow(0 4px 20px rgba(150,80,200,0.3));animation:floatTwilight 5s ease-in-out infinite}
+        .pony-left-1{left:8px;top:8%;animation-delay:0s}
+        .pony-right-1{right:8px;top:12%;animation-delay:1s}
+        .pony-left-2{left:8px;top:45%;animation-delay:2s}
+        .pony-right-2{right:8px;top:50%;animation-delay:0.5s}
+        .pony-left-3{left:8px;top:80%;animation-delay:1.5s}
+        @media(max-width:768px){.pony-side{width:80px;opacity:0.3}}
+        @media(max-width:480px){.pony-side{width:60px;opacity:0.28}}
+        .twilight-img{width:180px;height:auto;border-radius:12px;animation:floatTwilight 4s ease-in-out infinite;filter:drop-shadow(0 8px 25px rgba(150,80,200,0.3))}
+        @keyframes floatTwilight{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+        .twilight-text{font-family:'Lora',serif;font-style:italic;color:rgba(200,150,232,0.4);font-size:0.85rem;letter-spacing:2px}
+
+        .lightbox{display:none;position:fixed;inset:0;background:rgba(8,3,6,0.96);backdrop-filter:blur(20px);z-index:10000;align-items:center;justify-content:center}
+        .lightbox.open{display:flex}
+        .lightbox img{max-width:90%;max-height:88vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:lbIn 0.3s ease}
+        .lightbox .close-lb{position:absolute;top:22px;right:22px;color:rgba(232,168,124,0.4);font-size:1.6rem;cursor:pointer;background:none;border:none;transition:color 0.3s}
+        .lightbox .close-lb:hover{color:#e8a87c}
+        .lightbox .lb-prev,.lightbox .lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(196,69,105,0.1);border:1px solid rgba(196,69,105,0.15);color:rgba(232,168,124,0.6);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+        .lightbox .lb-prev{left:16px}
+        .lightbox .lb-next{right:16px}
+        .lightbox .lb-prev:hover,.lightbox .lb-next:hover{background:rgba(196,69,105,0.2);color:#e8a87c}
+        @keyframes lbIn{from{opacity:0;transform:scale(0.93)}to{opacity:1;transform:scale(1)}}
+
+        .signature{margin-top:50px;margin-bottom:60px;font-family:'Dancing Script',cursive;font-size:1.5rem;background:linear-gradient(135deg,#d4a5a5,#e8a87c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;opacity:0.5}
+        .fade-in{opacity:0;transform:translateY(28px);transition:all 1s cubic-bezier(0.25,0.46,0.45,0.94)}
+        .fade-in.visible{opacity:1;transform:translateY(0)}
+        .sparkle{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;animation:sparkleOut 0.6s ease-out forwards}
+        @keyframes sparkleOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0) translateY(-15px)}}
+
+        @media(max-width:768px){
+            .title{font-size:clamp(2.8rem,10vw,4.5rem)}
+            .heart-svg{width:65px;height:65px}
+            .central-heart{width:110px;height:110px}
+            .love-message{padding:24px 18px;margin:0 10px 25px}
+            .love-message p{font-size:0.93rem}
+            .carousel-item{width:180px;height:180px;margin:0 4px}
+            .carousel-track{gap:0}
+            .polaroid-grid{gap:18px}
+            .polaroid{width:160px;padding:6px 6px 28px}
+            .polaroid .caption{font-size:0.75rem;margin-top:5px}
+            .reasons-grid{grid-template-columns:1fr}
+            .rose-container{margin:10px 0;gap:8px}
+            .rose-wrapper,.rose-svg{width:180px;height:220px}
+            .constellation{display:none}
+            .twilight-img{width:140px}
+            .counter-display{gap:12px}
+            .counter-item{min-width:60px;padding:8px 10px}
+            .counter-number{font-size:1.8rem}
+            .counter-label{font-size:0.65rem}
+        }
+        @media(max-width:480px){
+            .title{font-size:clamp(2.5rem,10vw,3.8rem)}
+            .love-message{padding:20px 16px;margin:0 8px 20px}
+            .love-message p{font-size:0.95rem}
+            .carousel-item{width:220px;height:220px;margin:0 4px}
+            .polaroid-grid{gap:16px;padding:0 10px}
+            .polaroid{width:calc(50vw - 26px);padding:6px 6px 28px}
+            .polaroid img{aspect-ratio:1}
+            .polaroid .caption{font-size:0.75rem;margin-top:5px}
+            .rose-container{margin:6px 0;gap:8px}
+            .counter-display{gap:10px;flex-wrap:wrap;justify-content:center}
+            .counter-item{min-width:72px;padding:10px 8px}
+            .counter-number{font-size:1.7rem}
+            .counter-label{font-size:0.65rem}
+            .reason-card{padding:20px 16px}
+            .reason-number{font-size:2rem}
+            .reason-card p{font-size:0.9rem}
+            .rose-hint{font-size:1.2rem}
+            .rose-wrapper,.rose-svg{width:190px;height:230px}
+            .twilight-img{width:130px}
+            .signature{font-size:1.2rem}
+            .section-title{font-size:1.75rem}
+        }
+        @media(max-width:360px){
+            .polaroid{width:calc(100vw - 40px);padding:5px 5px 24px}
+            .polaroid-grid{flex-direction:column;align-items:center;gap:16px}
+            .carousel-item{width:160px;height:160px;margin:0 3px}
+            .counter-display{flex-direction:column;gap:6px}
+            .counter-item{min-width:100%;padding:8px}
+        }
+
+        /* Splash Intro */
+        .splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#1a0a18,#0a0408);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 1.2s ease,visibility 1.2s}
+        .splash.hidden{opacity:0;visibility:hidden;pointer-events:none}
+        .splash-heart{width:120px;height:120px;animation:splashBeat 1.2s ease-in-out infinite}
+        @keyframes splashBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+        .splash-text{font-family:'Dancing Script',cursive;font-size:2rem;color:rgba(232,168,124,0.85);margin-top:30px;text-align:center;animation:splashFade 2s ease-in-out infinite alternate}
+        /* Splash Intro */
+        .splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 60%,#2a0a1e 0%,#0e0212 50%,#050108 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:none}
+        .splash.dissolving{pointer-events:none}
+        .splash.dissolving .splash-inner{animation:splashDissolveContent 0.8s ease forwards}
+        .splash.dissolving .splash-bg-orb{animation:splashOrbExplode 1.2s ease forwards}
+        .splash.hidden{opacity:0;pointer-events:none}
+        @keyframes splashDissolveContent{0%{opacity:1;transform:scale(1);filter:blur(0)}40%{opacity:0.8;transform:scale(1.08);filter:blur(0)}100%{opacity:0;transform:scale(1.5);filter:blur(12px)}}
+        @keyframes splashOrbExplode{0%{transform:scale(1);opacity:1}100%{transform:scale(3);opacity:0}}
+        .splash-fragment{position:fixed;z-index:99998;pointer-events:none;border-radius:3px}
+        @keyframes fragmentFly{0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}100%{opacity:0;transform:translate(var(--fx),var(--fy)) rotate(var(--fr)) scale(0)}}
+        .splash-ring{position:fixed;z-index:99998;pointer-events:none;border-radius:50%;border:2px solid rgba(232,168,124,0.6);animation:splashRingExpand 1.4s ease-out forwards}
+        @keyframes splashRingExpand{0%{width:0;height:0;opacity:1}60%{opacity:0.6}100%{width:200vmax;height:200vmax;opacity:0}}
+        .splash-flash{position:fixed;inset:0;z-index:99997;pointer-events:none;background:radial-gradient(circle,rgba(255,220,200,0.9),rgba(196,69,105,0.4),transparent 70%);animation:splashFlash 1s ease-out forwards}
+        @keyframes splashFlash{0%{opacity:0;transform:scale(0.3)}15%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
+        .splash-particle{position:fixed;z-index:99998;pointer-events:none;border-radius:50%}
+        @keyframes particleBurst{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--px),var(--py)) scale(0)}}
+        .splash-bg-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+        .splash-bg-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(196,69,105,0.18),transparent 70%);top:-10%;left:-15%;animation:splashOrb 8s ease-in-out infinite alternate}
+        .splash-bg-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(107,47,160,0.15),transparent 70%);bottom:-5%;right:-10%;animation:splashOrb 10s ease-in-out infinite alternate-reverse}
+        @keyframes splashOrb{0%{transform:translate(0,0)}100%{transform:translate(30px,-25px)}}
+        .splash-sparkles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+        .splash-sparkle{position:absolute;border-radius:50%;background:rgba(232,168,124,0.7);animation:sSpark 4s ease-in-out infinite}
+        @keyframes sSpark{0%,100%{opacity:0;transform:scale(0) translateY(0)}40%{opacity:1;transform:scale(1)}80%{opacity:0.3;transform:scale(0.5) translateY(-20px)}}
+        .splash-inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;z-index:2}
+        .splash-hearts-row{display:flex;gap:14px;margin-bottom:28px;opacity:0;animation:splashSlideUp 0.8s ease 0.2s forwards}
+        .splash-mini-heart{width:18px;height:18px;opacity:0.5;animation:splashMiniPulse 2s ease-in-out infinite}
+        .splash-mini-heart:nth-child(2){animation-delay:0.3s;opacity:0.7;width:22px;height:22px}
+        .splash-mini-heart:nth-child(3){animation-delay:0.6s}
+        @keyframes splashMiniPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+        .splash-heart{width:130px;height:130px;animation:splashBeat 1.4s cubic-bezier(0.25,0.46,0.45,0.94) infinite;filter:drop-shadow(0 0 30px rgba(196,69,105,0.6)) drop-shadow(0 0 60px rgba(196,69,105,0.25));opacity:0;animation:splashBeatIn 0.9s ease 0.1s forwards, splashBeat 1.4s ease-in-out 1s infinite}
+        @keyframes splashBeatIn{0%{opacity:0;transform:scale(0.5)}60%{opacity:1;transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+        @keyframes splashBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.12)}30%{transform:scale(1)}45%{transform:scale(1.07)}}
+        .splash-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(232,168,124,0.5),transparent);margin:24px 0;opacity:0;animation:splashSlideUp 0.8s ease 0.6s forwards}
+        .splash-text{font-family:'Dancing Script',cursive;font-size:2.4rem;color:#f5e0d8;text-align:center;line-height:1.3;padding:0 30px;text-shadow:0 0 30px rgba(232,168,124,0.4),0 2px 20px rgba(0,0,0,0.5);opacity:0;animation:splashSlideUp 0.9s ease 0.5s forwards}
+        .splash-text span{color:#e8a87c}
+        .splash-btn{margin-top:38px;padding:14px 42px;background:linear-gradient(135deg,rgba(196,69,105,0.15),rgba(137,49,104,0.1));border:1px solid rgba(196,69,105,0.35);border-radius:50px;font-family:'Quicksand',sans-serif;font-size:0.9rem;font-weight:600;color:rgba(232,168,124,0.85);letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.4s;backdrop-filter:blur(8px);opacity:0;animation:splashSlideUp 0.9s ease 0.9s forwards;position:relative;overflow:hidden}
+        .splash-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(196,69,105,0.25),rgba(232,168,124,0.1));opacity:0;transition:opacity 0.4s;border-radius:50px}
+        .splash-btn:hover::before{opacity:1}
+        .splash-btn:hover{border-color:rgba(196,69,105,0.6);color:#e8a87c;box-shadow:0 0 25px rgba(196,69,105,0.2);transform:translateY(-2px)}
+        @keyframes splashSlideUp{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+        .splash-footer{margin-top:16px;font-family:'Lora',serif;font-style:italic;font-size:0.8rem;color:rgba(232,168,124,0.22);letter-spacing:2px;opacity:0;animation:splashSlideUp 0.9s ease 1.1s forwards}
+    </style>
+</head>
+<body>
+
+<!-- Splash Intro -->
+<div class="splash" id="splash" onclick="openPage()">
+    <div class="splash-bg-orb splash-bg-orb-1"></div>
+    <div class="splash-bg-orb splash-bg-orb-2"></div>
+    <div class="splash-sparkles" id="splashSparkles"></div>
+    <div class="splash-inner">
+        <div class="splash-hearts-row">
+            <svg class="splash-mini-heart" viewBox="0 0 24 24"><path fill="rgba(196,69,105,0.5)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <svg class="splash-mini-heart" viewBox="0 0 24 24"><path fill="rgba(232,168,124,0.8)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <svg class="splash-mini-heart" viewBox="0 0 24 24"><path fill="rgba(196,69,105,0.5)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <svg class="splash-heart" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="shGrad" cx="40%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#ffd6e0"/>
+                    <stop offset="45%" stop-color="#c44569"/>
+                    <stop offset="100%" stop-color="#6b1535"/>
+                </radialGradient>
+                <filter id="shGlow"><feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <path filter="url(#shGlow)" fill="url(#shGrad)" d="M16 28.72l-1.45-1.32C6.4 20.01 2 16.07 2 11.25 2 7.42 5.07 4.35 8.9 4.35c2.17 0 4.26 1.01 5.6 2.6a7.96 7.96 0 015.6-2.6C23.93 4.35 27 7.42 27 11.25c0 4.82-4.4 8.76-12.55 16.15L16 28.72z"/>
+        </svg>
+        <div class="splash-divider"></div>
+        <p class="splash-text">tengo algo para ti <span>:3</span><br>te amo</p>
+        <p class="splash-footer" style="margin-top:38px;color:rgba(232,168,124,0.5);font-size:0.85rem;letter-spacing:2px;animation:splashSlideUp 0.9s ease 0.9s forwards;opacity:0">toca para descubrir &#x2665;</p>
+    </div>
+</div>
+
+<audio id="bgMusic" loop preload="auto"><source src="img/Kiss Me.mp3" type="audio/mpeg"></audio>
+
+<div class="bg-gradient"></div>
+<div class="nebula"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="orb orb-4"></div>
+<div class="orb orb-5"></div>
+<div class="stars" id="stars"></div>
+<div class="particles" id="particles"></div>
+
+<!-- Constelacion Libra -->
+<div class="constellation" id="libraConstellation" style="position:fixed;top:8%;right:5%;width:280px;height:250px;z-index:1;pointer-events:none">
+<svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+    <!-- Lines -->
+    <line x1="100" y1="30" x2="60" y2="70"/>
+    <line x1="100" y1="30" x2="140" y2="70"/>
+    <line x1="60" y1="70" x2="40" y2="110"/>
+    <line x1="60" y1="70" x2="80" y2="110"/>
+    <line x1="140" y1="70" x2="120" y2="110"/>
+    <line x1="140" y1="70" x2="160" y2="110"/>
+    <line x1="40" y1="110" x2="80" y2="110"/>
+    <line x1="120" y1="110" x2="160" y2="110"/>
+    <line x1="80" y1="110" x2="100" y2="140"/>
+    <line x1="120" y1="110" x2="100" y2="140"/>
+    <!-- Stars/nodes -->
+    <circle cx="100" cy="30" r="2.5"/><circle class="star-glow" cx="100" cy="30" r="5"/>
+    <circle cx="60" cy="70" r="2"/><circle class="star-glow" cx="60" cy="70" r="4"/>
+    <circle cx="140" cy="70" r="2"/><circle class="star-glow" cx="140" cy="70" r="4"/>
+    <circle cx="40" cy="110" r="1.8"/><circle class="star-glow" cx="40" cy="110" r="3.5"/>
+    <circle cx="80" cy="110" r="2"/><circle class="star-glow" cx="80" cy="110" r="4"/>
+    <circle cx="120" cy="110" r="2"/><circle class="star-glow" cx="120" cy="110" r="4"/>
+    <circle cx="160" cy="110" r="1.8"/><circle class="star-glow" cx="160" cy="110" r="3.5"/>
+    <circle cx="100" cy="140" r="2.5"/><circle class="star-glow" cx="100" cy="140" r="5"/>
+    <text x="85" y="165" class="libra-label">Libra</text>
+</svg>
+</div>
+
+<div class="main-content">
+    <section class="hero-section">
+        <div class="central-heart fade-in">
+            <div class="heart-outer-ring"></div>
+            <div class="heart-inner-ring"></div>
+            <div class="heart-pulse-ring"></div>
+            <div class="heart-pulse-ring"></div>
+            <div class="heart-pulse-ring"></div>
+            <div class="heart-glow"></div>
+            <svg class="heart-svg" id="mainHeart" viewBox="0 0 32 32">
+                <defs>
+                    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#e8a87c"/>
+                        <stop offset="50%" stop-color="#c44569"/>
+                        <stop offset="100%" stop-color="#893168"/>
+                    </linearGradient>
+                    <filter id="heartShadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#c44569" flood-opacity="0.5"/></filter>
+                </defs>
+                <path d="M16 28.72l-1.45-1.32C6.4 20.01 2 16.06 2 11.2 2 7.26 5.26 4 9.2 4c2.22 0 4.35 1.03 5.8 2.66C16.45 5.03 18.58 4 20.8 4 24.74 4 28 7.26 28 11.2c0 4.86-4.4 8.81-12.55 16.2L16 28.72z" fill="url(#heartGrad)" filter="url(#heartShadow)"/>
+            </svg>
+        </div>        <h1 class="title fade-in">Diana &#x2764;&#xFE0F;</h1>
+        <div class="decorative-line fade-in"></div>
+        <p class="subtitle fade-in">mi amooor, mi vidaaa, mi todoo</p>
+        <div class="love-message fade-in">
+            <p>Amor te amo muchisimooo, ya han pasado <span class="highlight">7 meses</span> desde que empezamos esta historia juntos y cada dia confirmo que eres lo mejor que me ha pasado.</p>
+            <p><span class="highlight">T&#250;</span> eres mi persona favorita, mi raz&#243;n de sonre&#237;r, la luz que ilumina cada uno de mis d&#237;as. Contigo todo es mejor, todo es m&#225;s bonito, todo tiene sentido :3.</p>
+            <p>Te amo con todo mi coraz&#243;n y quiero seguir escribiendo nuestra historia juntos, hoy, ma&#241;ana y siempre. PD: Me gustas, dame besito.</p>
+        </div>
+        <div class="small-hearts">
+            <svg class="mini-heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <svg class="mini-heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <svg class="mini-heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+    </section>
+
+    <!-- Ponys decorativos fijos -->
+    <div class="ponys-deco">
+        <img class="pony-side pony-left-1" src="img/pngegg.png" alt="">
+        <img class="pony-side pony-right-1" src="img/pngegg (1).png" alt="">
+        <img class="pony-side pony-left-2" src="img/pngegg (2).png" alt="">
+        <img class="pony-side pony-right-2" src="img/pngegg (4).png" alt="">
+        <img class="pony-side pony-left-3" src="img/pngegg (3).png" alt="">
+    </div>
+
+    <!-- Rosa SVG interactiva -->
+    <div class="rose-container fade-in">
+        <p class="rose-hint">&#x2665; toca la rosa </p>
+        <div class="rose-wrapper" onclick="bloomRose()">
+            <div class="rose-glow"></div>
+            <svg class="rose-svg" id="roseSvg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="rg-out" cx="50%" cy="82%" r="68%">
+                        <stop offset="0%" stop-color="#5a0c22"/><stop offset="42%" stop-color="#ae2848"/><stop offset="100%" stop-color="#dc6e8a"/>
+                    </radialGradient>
+                    <radialGradient id="rg-mid" cx="50%" cy="76%" r="63%">
+                        <stop offset="0%" stop-color="#721836"/><stop offset="48%" stop-color="#c03a62"/><stop offset="100%" stop-color="#e8829e"/>
+                    </radialGradient>
+                    <radialGradient id="rg-inn" cx="50%" cy="68%" r="58%">
+                        <stop offset="0%" stop-color="#8a1e3c"/><stop offset="52%" stop-color="#d45070"/><stop offset="100%" stop-color="#f2a2b8"/>
+                    </radialGradient>
+                    <radialGradient id="rg-ctr" cx="36%" cy="33%" r="65%">
+                        <stop offset="0%" stop-color="#ffc8d5"/><stop offset="30%" stop-color="#e25572"/><stop offset="100%" stop-color="#480a18"/>
+                    </radialGradient>
+                    <linearGradient id="lg-stem" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#1e4420"/><stop offset="45%" stop-color="#488a42"/><stop offset="100%" stop-color="#1e4420"/>
+                    </linearGradient>
+                    <filter id="pf" x="-8%" y="-8%" width="116%" height="116%">
+                        <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#380818" flood-opacity="0.32"/>
+                    </filter>
+                </defs>
+                <!-- Stem -->
+                <path d="M100 168 Q97 190 95 216 Q100 220 105 216 Q103 190 100 168" fill="url(#lg-stem)"/>
+                <!-- Leaves -->
+                <path d="M97 197 C73 186 60 165 68 154 C72 148 85 160 97 194" fill="#336630" opacity="0.9"/>
+                <path d="M97 193 C80 188 69 155" fill="none" stroke="#1e4420" stroke-width="0.8" opacity="0.55"/>
+                <path d="M103 195 C127 185 140 164 132 153 C128 147 115 159 103 194" fill="#336630" opacity="0.9"/>
+                <path d="M103 194 C120 188 131 154" fill="none" stroke="#1e4420" stroke-width="0.8" opacity="0.55"/>
+                <!-- Outer petals -->
+                <g id="op" filter="url(#pf)">
+                    <path d="M0 0 C-24 -10,-29 -46,-11 -65 C-5 -72,5 -72,11 -65 C29 -46,24 -10,0 0Z" fill="url(#rg-out)" transform="translate(100,100) rotate(0)" opacity="0.90"/>
+                    <path d="M0 0 C-24 -10,-29 -46,-11 -65 C-5 -72,5 -72,11 -65 C29 -46,24 -10,0 0Z" fill="url(#rg-out)" transform="translate(100,100) rotate(72)" opacity="0.90"/>
+                    <path d="M0 0 C-24 -10,-29 -46,-11 -65 C-5 -72,5 -72,11 -65 C29 -46,24 -10,0 0Z" fill="url(#rg-out)" transform="translate(100,100) rotate(144)" opacity="0.90"/>
+                    <path d="M0 0 C-24 -10,-29 -46,-11 -65 C-5 -72,5 -72,11 -65 C29 -46,24 -10,0 0Z" fill="url(#rg-out)" transform="translate(100,100) rotate(216)" opacity="0.90"/>
+                    <path d="M0 0 C-24 -10,-29 -46,-11 -65 C-5 -72,5 -72,11 -65 C29 -46,24 -10,0 0Z" fill="url(#rg-out)" transform="translate(100,100) rotate(288)" opacity="0.90"/>
+                </g>
+                <!-- Outer petal veins -->
+                <g opacity="0.10" stroke="#2e0610" stroke-width="0.8" fill="none">
+                    <line x1="100" y1="100" x2="100" y2="36" transform="rotate(0,100,100)"/>
+                    <line x1="100" y1="100" x2="100" y2="36" transform="rotate(72,100,100)"/>
+                    <line x1="100" y1="100" x2="100" y2="36" transform="rotate(144,100,100)"/>
+                    <line x1="100" y1="100" x2="100" y2="36" transform="rotate(216,100,100)"/>
+                    <line x1="100" y1="100" x2="100" y2="36" transform="rotate(288,100,100)"/>
+                </g>
+                <!-- Mid petals -->
+                <g id="mp" filter="url(#pf)">
+                    <path d="M0 0 C-18 -7,-22 -35,-8 -49 C-4 -54,4 -54,8 -49 C22 -35,18 -7,0 0Z" fill="url(#rg-mid)" transform="translate(100,100) rotate(36)" opacity="0.93"/>
+                    <path d="M0 0 C-18 -7,-22 -35,-8 -49 C-4 -54,4 -54,8 -49 C22 -35,18 -7,0 0Z" fill="url(#rg-mid)" transform="translate(100,100) rotate(108)" opacity="0.93"/>
+                    <path d="M0 0 C-18 -7,-22 -35,-8 -49 C-4 -54,4 -54,8 -49 C22 -35,18 -7,0 0Z" fill="url(#rg-mid)" transform="translate(100,100) rotate(180)" opacity="0.93"/>
+                    <path d="M0 0 C-18 -7,-22 -35,-8 -49 C-4 -54,4 -54,8 -49 C22 -35,18 -7,0 0Z" fill="url(#rg-mid)" transform="translate(100,100) rotate(252)" opacity="0.93"/>
+                    <path d="M0 0 C-18 -7,-22 -35,-8 -49 C-4 -54,4 -54,8 -49 C22 -35,18 -7,0 0Z" fill="url(#rg-mid)" transform="translate(100,100) rotate(324)" opacity="0.93"/>
+                </g>
+                <!-- Inner petals -->
+                <g id="ip">
+                    <path d="M0 0 C-11 -5,-14 -22,-5 -32 C-2 -36,2 -36,5 -32 C14 -22,11 -5,0 0Z" fill="url(#rg-inn)" transform="translate(100,100) rotate(18)"/>
+                    <path d="M0 0 C-11 -5,-14 -22,-5 -32 C-2 -36,2 -36,5 -32 C14 -22,11 -5,0 0Z" fill="url(#rg-inn)" transform="translate(100,100) rotate(90)"/>
+                    <path d="M0 0 C-11 -5,-14 -22,-5 -32 C-2 -36,2 -36,5 -32 C14 -22,11 -5,0 0Z" fill="url(#rg-inn)" transform="translate(100,100) rotate(162)"/>
+                    <path d="M0 0 C-11 -5,-14 -22,-5 -32 C-2 -36,2 -36,5 -32 C14 -22,11 -5,0 0Z" fill="url(#rg-inn)" transform="translate(100,100) rotate(234)"/>
+                    <path d="M0 0 C-11 -5,-14 -22,-5 -32 C-2 -36,2 -36,5 -32 C14 -22,11 -5,0 0Z" fill="url(#rg-inn)" transform="translate(100,100) rotate(306)"/>
+                </g>
+                <!-- Center -->
+                <circle cx="100" cy="100" r="13" fill="url(#rg-ctr)"/>
+                <circle cx="100" cy="100" r="8" fill="url(#rg-ctr)" opacity="0.88"/>
+                <circle cx="97" cy="97" r="3.5" fill="rgba(255,205,220,0.45)"/>
+            </svg>
+        </div>
+    </div>
+    <div class="rose-modal" id="roseModal" onclick="closeRoseModal(event)">
+        <div class="rose-modal-content" onclick="event.stopPropagation()">
+            <div class="modal-border-glow"></div>
+            <div class="modal-glow"></div>
+            <div class="modal-sparkles" id="modalSparkles"></div>
+            <div class="modal-heart-icon">&#x1F339;</div>
+            <p class="rose-modal-text">Felices 7 meses princesaaa 7w7</p>
+            <p class="rose-modal-subtext">- por siempre tuyo JAJA -</p>
+            <button class="rose-modal-close" onclick="closeRoseModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Lo hermosa que est&#225;s - Carrusel -->
+    <div class="section-divider fade-in"><h2 class="section-title">Lo hermosa que est&#225;s</h2><div class="section-line"></div><p class="section-subtitle">La más linda de todass</p></div>
+    <div class="carousel-section">
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (2).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (3).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (4).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (5).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (6).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (7).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (8).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.28 PM (2).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.28 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.27 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-05-05 at 1.46.13 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-05-05 at 1.46.13 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-05-05 at 1.46.13 PM (2).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-05-05 at 1.46.14 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (2).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (3).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (4).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (5).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (6).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (7).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (8).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.28 PM (2).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.28 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.27 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM.jpeg" alt=""></div>
+        </div>
+    </div>
+
+    <!-- Polaroids -->
+    <div class="section-divider fade-in"><h2 class="section-title">Momentos</h2><div class="section-line"></div><p class="section-subtitle">te quiero muchisimo</p></div>
+    <div class="polaroid-section fade-in"><div class="polaroid-grid">
+        <div class="polaroid" style="--rot:-3deg"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM (2).jpeg" alt=""><div class="caption">La más hermosa</div></div>
+        <div class="polaroid" style="--rot:2.5deg"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM (3).jpeg" alt=""><div class="caption">Mi persona favorita</div></div>
+        <div class="polaroid" style="--rot:-1.5deg"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM (4).jpeg" alt=""><div class="caption">La más bonita</div></div>
+        <div class="polaroid" style="--rot:3deg"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM (5).jpeg" alt=""><div class="caption">La más linda</div></div>
+        <div class="polaroid" style="--rot:-2deg"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM (6).jpeg" alt=""><div class="caption">Te amo</div></div>
+        <div class="polaroid" style="--rot:2deg"><img src="img/WhatsApp Image 2026-04-18 at 11.20.25 PM.jpeg" alt=""><div class="caption">Mi todo</div></div>
+        <div class="polaroid" style="--rot:-1deg"><img src="img/WhatsApp Image 2026-05-05 at 1.46.13 PM (2).jpeg" alt=""><div class="caption">Preciosa</div></div>
+        <div class="polaroid" style="--rot:2.5deg"><img src="img/WhatsApp Image 2026-05-05 at 1.46.14 PM.jpeg" alt=""><div class="caption">Mi niña bella</div></div>
+    </div></div>
+
+    <!-- Nosotros - Carrusel -->
+    <div class="section-divider fade-in"><h2 class="section-title">Nosotros</h2><div class="section-line"></div><p class="section-subtitle"></p></div>
+    <div class="carousel-section-2">
+        <div class="carousel-track-2" id="carouselTrack2">
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (2).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (3).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (4).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.27 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.28 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-05-05 at 1.46.13 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-05-05 at 1.46.14 PM.jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (2).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (3).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (4).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.30 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.27 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.28 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.26 PM (1).jpeg" alt=""></div>
+            <div class="carousel-item"><img src="img/WhatsApp Image 2026-04-18 at 11.20.29 PM (1).jpeg" alt=""></div>
+        </div>
+    </div>
+
+    <!-- Razones -->
+    <div class="section-divider fade-in"><h2 class="section-title">Razones por las que te amo</h2><div class="section-line"></div></div>
+    <div class="reasons-section fade-in">
+        <div class="reasons-grid">
+            <div class="reason-card" style="--delay:0s"><div class="reason-number">01</div><p>Tu sonrisa me cambia el d&#237;a por completo</p></div>
+            <div class="reason-card" style="--delay:0.1s"><div class="reason-number">02</div><p>La forma en que me miras</p></div>
+            <div class="reason-card" style="--delay:0.2s"><div class="reason-number">03</div><p>Tu voz porque es mi sonido favorito jsjjs</p></div>
+            <div class="reason-card" style="--delay:0.3s"><div class="reason-number">04</div><p>Cada segundo contigo se siente como un regalo</p></div>
+            <div class="reason-card" style="--delay:0.4s"><div class="reason-number">05</div><p>Haces que quiera crecer y ser mejor persona</p></div>
+            <div class="reason-card" style="--delay:0.5s"><div class="reason-number">06</div><p>Porque contigo encontr&#233; mi lugar favorito</p></div>
+            <div class="reason-card" style="--delay:0.6s"><div class="reason-number">07</div><p>7 meses, y cada d&#237;a te amo m&#225;s</p></div>
+        </div>
+    </div>
+
+    <!-- Counter mejorado -->
+    <div class="love-counter fade-in">
+        <div class="counter-heart">&#x2764;&#xFE0F;</div>
+        <div class="counter-title">Tiempo am&#225;ndote</div>
+        <div class="counter-display">
+            <div class="counter-item"><div class="counter-number" id="days">0</div><div class="counter-label">D&#237;as</div></div>
+            <div class="counter-item"><div class="counter-number" id="hours">0</div><div class="counter-label">Horas</div></div>
+            <div class="counter-item"><div class="counter-number" id="minutes">0</div><div class="counter-label">Minutos</div></div>
+            <div class="counter-item"><div class="counter-number" id="seconds">0</div><div class="counter-label">Segundos</div></div>
+        </div>
+    </div>
+
+    <!-- Twilight Sparkle -->
+    <div class="twilight-section fade-in">
+        <img src="img/Twilight_Sparkle.webp" alt="Twilight Sparkle" class="twilight-img">
+        <p class="twilight-text">nuestro amor es m&#225;gico &#x2728;</p>
+    </div>
+
+    <p class="signature fade-in">Con todo mi amor, siempre tuyo</p>
+</div>
+
+<div class="lightbox" id="lightbox"><button class="close-lb" id="closeLb">&#10005;</button><button class="lb-prev" id="lbPrev">&#10094;</button><img src="" alt="" id="lightboxImg"><button class="lb-next" id="lbNext">&#10095;</button></div>
+<script>
+// Stars + comets + shooting stars
+(function(){
+    var s=document.getElementById('stars');
+    for(var i=0;i<160;i++){
+        var d=document.createElement('div');
+        d.className='star';
+        d.style.left=Math.random()*100+'%';
+        d.style.top=Math.random()*100+'%';
+        d.style.setProperty('--dur',(Math.random()*2+2)+'s');
+        d.style.setProperty('--delay',Math.random()*4+'s');
+        d.style.width=d.style.height=(Math.random()*2.5+0.5)+'px';
+        s.appendChild(d);
+    }
+    // Cometas grandes
+    for(var i=0;i<8;i++){
+        var c=document.createElement('div');
+        c.className='comet';
+        c.style.left=(Math.random()*50+40)+'%';
+        c.style.top=(Math.random()*40)+'%';
+        var angle=200+Math.random()*40;
+        c.style.setProperty('--angle',angle+'deg');
+        c.style.setProperty('--dur',(Math.random()*5+6)+'s');
+        c.style.setProperty('--delay',(Math.random()*15)+'s');
+        var rad=angle*Math.PI/180;
+        c.style.setProperty('--dx',(Math.cos(rad)*450)+'px');
+        c.style.setProperty('--dy',(Math.sin(rad)*450)+'px');
+        s.appendChild(c);
+    }
+    // Estrellas fugaces extra
+    for(var i=0;i<5;i++){
+        var ss=document.createElement('div');
+        ss.className='shooting-star';
+        ss.style.left=(Math.random()*70+20)+'%';
+        ss.style.top=(Math.random()*30+5)+'%';
+        var angle=210+Math.random()*30;
+        ss.style.setProperty('--angle',angle+'deg');
+        ss.style.setProperty('--dur',(Math.random()*3+4)+'s');
+        ss.style.setProperty('--delay',(Math.random()*20)+'s');
+        var rad=angle*Math.PI/180;
+        ss.style.setProperty('--dx',(Math.cos(rad)*250)+'px');
+        ss.style.setProperty('--dy',(Math.sin(rad)*250)+'px');
+        s.appendChild(ss);
+    }
+})();
+
+// Modal sparkles
+(function(){
+    var cont=document.getElementById('modalSparkles');
+    for(var i=0;i<12;i++){
+        var sp=document.createElement('div');
+        sp.className='modal-sparkle';
+        sp.style.left=Math.random()*100+'%';
+        sp.style.top=Math.random()*100+'%';
+        sp.style.animationDelay=(Math.random()*3)+'s';
+        sp.style.width=sp.style.height=(Math.random()*3+1)+'px';
+        cont.appendChild(sp);
+    }
+})();
+
+// Particles
+(function(){
+    var c=document.getElementById('particles');
+    for(var i=0;i<25;i++){
+        var p=document.createElement('div');
+        p.className='particle';
+        p.style.left=Math.random()*100+'%';
+        p.style.top=(80+Math.random()*20)+'%';
+        p.style.width=p.style.height=(Math.random()*3+1)+'px';
+        p.style.background=['rgba(196,69,105,0.35)','rgba(232,168,124,0.25)','rgba(212,165,165,0.3)','rgba(100,40,150,0.2)'][Math.floor(Math.random()*4)];
+        p.style.setProperty('--dur',(Math.random()*8+10)+'s');
+        p.style.setProperty('--delay',(Math.random()*10)+'s');
+        c.appendChild(p);
+    }
+})();
+
+// Petals
+(function(){
+    var colors=['rgba(196,69,105,0.28)','rgba(212,165,165,0.2)','rgba(232,168,124,0.16)','rgba(150,50,100,0.15)'];
+    function create(){
+        var p=document.createElement('div');
+        p.classList.add('petal');
+        p.style.left=Math.random()*100+'vw';
+        p.style.width=(Math.random()*8+5)+'px';
+        p.style.height=(Math.random()*6+4)+'px';
+        p.style.background=colors[Math.floor(Math.random()*colors.length)];
+        p.style.setProperty('--dur',(Math.random()*6+10)+'s');
+        p.style.setProperty('--delay',(Math.random()*4)+'s');
+        document.body.appendChild(p);
+        setTimeout(function(){p.remove()},18000);
+    }
+    setInterval(create,3000);
+    for(var i=0;i<5;i++) setTimeout(create,i*600);
+})();
+
+// Heart explosion
+function createHeartExplosion(x,y){
+    var fills=['#c44569','#e8a87c','#d4a5a5','#f5c6c6','#893168'];
+    for(var i=0;i<16;i++){
+        var el=document.createElement('div');
+        var size=Math.random()*14+10;
+        el.innerHTML='<svg viewBox="0 0 24 24" width="'+size+'" height="'+size+'"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="'+fills[Math.floor(Math.random()*fills.length)]+'"/></svg>';
+        el.style.cssText='position:fixed;left:'+x+'px;top:'+y+'px;pointer-events:none;z-index:9999;transition:all 1.1s cubic-bezier(0.25,0.46,0.45,0.94)';
+        document.body.appendChild(el);
+        var angle=(i/16)*Math.PI*2;
+        var dist=80+Math.random()*80;
+        (function(h,a,d){setTimeout(function(){h.style.transform='translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px) scale(0) rotate('+(Math.random()*180)+'deg)';h.style.opacity='0'},10);setTimeout(function(){h.remove()},1200)})(el,angle,dist);
+    }
+}
+
+document.getElementById('mainHeart').addEventListener('click',function(e){createHeartExplosion(e.clientX,e.clientY)});
+
+// Sparkle on click
+document.addEventListener('click',function(e){
+    if(e.target.closest('.rose-wrapper')||e.target.closest('.rose-modal')||e.target.closest('.lightbox')||e.target.closest('#mainHeart'))return;
+    var colors=['#c44569','#e8a87c','#d4a5a5','#f5c6c6'];
+    for(var i=0;i<5;i++){
+        var s=document.createElement('div');
+        s.className='sparkle';
+        s.style.left=(e.clientX+(Math.random()-0.5)*30)+'px';
+        s.style.top=(e.clientY+(Math.random()-0.5)*30)+'px';
+        s.style.background=colors[Math.floor(Math.random()*colors.length)];
+        s.style.width=s.style.height=(Math.random()*5+2)+'px';
+        document.body.appendChild(s);
+        setTimeout((function(el){return function(){el.remove()}})(s),600);
+    }
+});
+
+// Rose bloom
+function bloomRose(){
+    var rose=document.getElementById('roseSvg');
+    var modal=document.getElementById('roseModal');
+    if(rose.classList.contains('bloomed')){
+        modal.classList.add('active');
+        createHeartExplosion(window.innerWidth/2,window.innerHeight/2);
+        return;
+    }
+    rose.classList.add('bloomed');
+    setTimeout(function(){
+        modal.classList.add('active');
+        createHeartExplosion(window.innerWidth/2,window.innerHeight/2);
+    },1000);
+}
+function closeRoseModal(event){
+    if(event&&event.target!==document.getElementById('roseModal')&&event.target.tagName!=='BUTTON')return;
+    document.getElementById('roseModal').classList.remove('active');
+}
+
+// Counter
+(function(){
+    var start=new Date('2025-10-18T00:00:00');
+    function update(){
+        var diff=new Date()-start;
+        document.getElementById('days').textContent=Math.floor(diff/(1000*60*60*24));
+        document.getElementById('hours').textContent=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+        document.getElementById('minutes').textContent=Math.floor((diff%(1000*60*60))/(1000*60));
+        document.getElementById('seconds').textContent=Math.floor((diff%(1000*60))/1000);
+    }
+    update();setInterval(update,1000);
+})();
+
+// Lightbox
+(function(){
+    var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lightboxImg'),all=[],idx=0;
+    document.querySelectorAll('.carousel-item img,.polaroid img,.mosaic-item img').forEach(function(img){
+        img.addEventListener('click',function(e){
+            e.stopPropagation();
+            all=Array.from(document.querySelectorAll('.carousel-item img,.polaroid img,.mosaic-item img'));
+            idx=all.indexOf(this);lbImg.src=this.src;lb.classList.add('open');document.body.style.overflow='hidden';
+        });
+    });
+    function close(){lb.classList.remove('open');document.body.style.overflow=''}
+    document.getElementById('closeLb').addEventListener('click',function(e){e.stopPropagation();close()});
+    lb.addEventListener('click',function(e){if(e.target===lb)close()});
+    document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();idx=(idx-1+all.length)%all.length;lbImg.src=all[idx].src});
+    document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();idx=(idx+1)%all.length;lbImg.src=all[idx].src});
+    document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')document.getElementById('lbPrev').click();if(e.key==='ArrowRight')document.getElementById('lbNext').click()});
+})();
+
+// Fade in
+(function(){
+    var els=document.querySelectorAll('.fade-in');
+    var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.1});
+    els.forEach(function(el){obs.observe(el)});
+    setTimeout(function(){els.forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('visible')})},80);
+})();
+
+// Reason cards
+(function(){
+    var cards=document.querySelectorAll('.reason-card');
+    var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.12});
+    cards.forEach(function(c){obs.observe(c)});
+})();
+
+// Constellation parallax disabled - static
+// Constelación estática, sin movimiento
+
+// Splash intro sparkles
+(function(){
+    var sp=document.getElementById('splashSparkles');
+    if(!sp)return;
+    for(var i=0;i<55;i++){
+        var s=document.createElement('div');
+        s.className='splash-sparkle';
+        var size=(Math.random()*3+1);
+        s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+size+'px;height:'+size+'px;animation-delay:'+Math.random()*4+'s;animation-duration:'+(3+Math.random()*3)+'s';
+        sp.appendChild(s);
+    }
+    document.body.style.overflow='hidden';
+})();
+
+function openPage(){
+    var splash=document.getElementById('splash');
+    var music=document.getElementById('bgMusic');
+    if(splash.classList.contains('dissolving'))return;
+    splash.classList.add('dissolving');
+
+    // Flash de luz central
+    var flash=document.createElement('div');
+    flash.className='splash-flash';
+    document.body.appendChild(flash);
+    setTimeout(function(){flash.remove()},1100);
+
+    // Anillo expansivo
+    var ring=document.createElement('div');
+    ring.className='splash-ring';
+    ring.style.cssText='top:50%;left:50%;transform:translate(-50%,-50%)';
+    document.body.appendChild(ring);
+    setTimeout(function(){ring.remove()},1500);
+
+    // Segundo anillo con delay
+    setTimeout(function(){
+        var ring2=document.createElement('div');
+        ring2.className='splash-ring';
+        ring2.style.cssText='top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(196,69,105,0.5);animation-duration:1.6s';
+        document.body.appendChild(ring2);
+        setTimeout(function(){ring2.remove()},1700);
+    },150);
+
+    // Particulas de explosion
+    var colors=['#c44569','#e8a87c','#d4a5a5','#f5c6c6','#893168','#ffd6e0','#6b2fa0'];
+    for(var i=0;i<60;i++){
+        var p=document.createElement('div');
+        p.className='splash-particle';
+        var size=Math.random()*8+3;
+        var angle=Math.random()*Math.PI*2;
+        var dist=150+Math.random()*350;
+        var px=Math.cos(angle)*dist;
+        var py=Math.sin(angle)*dist;
+        p.style.cssText='left:50%;top:50%;width:'+size+'px;height:'+size+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';--px:'+px+'px;--py:'+py+'px;animation:particleBurst '+(0.8+Math.random()*0.8)+'s cubic-bezier(0.25,0.46,0.45,0.94) forwards;animation-delay:'+(Math.random()*0.2)+'s;box-shadow:0 0 '+(size*2)+'px '+colors[Math.floor(Math.random()*colors.length)];
+        document.body.appendChild(p);
+        (function(el){setTimeout(function(){el.remove()},2000)})(p);
+    }
+
+    // Fragmentos que salen volando (como vidrio roto)
+    var fragColors=['rgba(42,10,30,0.8)','rgba(14,2,18,0.7)','rgba(196,69,105,0.3)','rgba(107,47,160,0.25)'];
+    for(var i=0;i<35;i++){
+        var f=document.createElement('div');
+        f.className='splash-fragment';
+        var w=30+Math.random()*80;
+        var h=30+Math.random()*80;
+        var startX=Math.random()*100;
+        var startY=Math.random()*100;
+        var fx=(Math.random()-0.5)*600;
+        var fy=(Math.random()-0.5)*600;
+        var fr=(Math.random()-0.5)*720;
+        f.style.cssText='left:'+startX+'%;top:'+startY+'%;width:'+w+'px;height:'+h+'px;background:'+fragColors[Math.floor(Math.random()*fragColors.length)]+';--fx:'+fx+'px;--fy:'+fy+'px;--fr:'+fr+'deg;animation:fragmentFly '+(0.7+Math.random()*0.6)+'s cubic-bezier(0.25,0.46,0.45,0.94) forwards;animation-delay:'+(Math.random()*0.15)+'s';
+        document.body.appendChild(f);
+        (function(el){setTimeout(function(){el.remove()},1500)})(f);
+    }
+
+    // Corazoncitos que explotan desde el centro
+    setTimeout(function(){
+        createHeartExplosion(window.innerWidth/2,window.innerHeight/2);
+    },200);
+
+    // Fade out del fondo splash
+    setTimeout(function(){
+        splash.style.transition='opacity 0.6s ease';
+        splash.classList.add('hidden');
+        document.body.style.overflow='';
+        music.volume=0.4;
+        music.play().catch(function(){});
+    },600);
+
+    setTimeout(function(){splash.style.display='none'},1400);
+}
+</script>
+</body>
+</html>
