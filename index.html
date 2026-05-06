@@ -254,30 +254,24 @@
             .counter-item{min-width:100%;padding:8px}
         }
 
-        /* MOBILE: desactivar animaciones pesadas */
+        /* MOBILE: solo quitar lo más pesado */
         @media(max-width:768px){
-            .heart-svg{filter:none!important;animation:heartbeat 2s ease-in-out infinite}
-            .heart-outer-ring,.heart-inner-ring,.heart-glow,.heart-pulse-ring{display:none!important}
-            .title{animation:none!important;background:linear-gradient(135deg,#f5c6c6,#e8a87c);-webkit-background-clip:text;background-clip:text}
-            .rose-glow{animation:none!important;display:none}
-            .rose-svg{filter:none!important;transition:transform 0.3s}
-            .pony-side{display:none!important}
-            .stars{display:none!important}
-            .particles{display:none!important}
-            .petal{display:none!important}
-            .nebula{display:none!important}
+            /* quitar doble drop-shadow y blur (lo más lento) */
+            .heart-svg{filter:drop-shadow(0 0 18px rgba(196,69,105,0.6))!important}
+            .heart-pulse-ring:nth-child(5){display:none}
+            .rose-svg{filter:drop-shadow(0 4px 16px rgba(196,69,105,0.35))!important}
+            .rose-svg.bloomed{filter:drop-shadow(0 0 18px rgba(196,69,105,0.7))!important}
+            /* quitar orbs y nebula animados */
             .orb{display:none!important}
+            .nebula{display:none!important}
             .constellation{display:none!important}
+            /* ponys más pequeños en mobile */
+            .pony-side{width:55px!important;opacity:0.25!important}
+            /* modal sin blur */
             .rose-modal{backdrop-filter:none!important}
-            .modal-glow{display:none!important}
-            .rose-modal-content{box-shadow:none!important}
-            .mini-heart{animation:bounceH 2s ease-in-out infinite}
-            .rose-hint{animation:none!important;opacity:0.8}
+            .modal-glow{animation-duration:20s}
+            /* splash orbs son pesados */
             .splash-bg-orb{display:none!important}
-            .splash-sparkles{display:none!important}
-            .carousel-item img{transition:none!important}
-            .polaroid{transition:none!important}
-            .comet{display:none!important}
         }
 
         /* Splash Intro */
@@ -650,7 +644,8 @@ document.addEventListener('touchmove',function(){clearTimeout(longPressTimer)});
 // Stars + comets (optimizado)
 (function(){
     var s=document.getElementById('stars');
-    for(var i=0;i<60;i++){
+    var starCount=window.innerWidth<=768?35:60;
+    for(var i=0;i<starCount;i++){
         var d=document.createElement('div');
         d.className='star';
         d.style.left=Math.random()*100+'%';
@@ -690,11 +685,11 @@ document.addEventListener('touchmove',function(){clearTimeout(longPressTimer)});
     }
 })();
 
-// Particles (solo desktop)
+// Particles
 (function(){
-    if(window.innerWidth<=768)return;
+    var count=window.innerWidth<=768?6:10;
     var c=document.getElementById('particles');
-    for(var i=0;i<10;i++){
+    for(var i=0;i<count;i++){
         var p=document.createElement('div');
         p.className='particle';
         p.style.left=Math.random()*100+'%';
@@ -707,9 +702,9 @@ document.addEventListener('touchmove',function(){clearTimeout(longPressTimer)});
     }
 })();
 
-// Petals (solo desktop)
+// Petals
 (function(){
-    if(window.innerWidth<=768)return;
+    var isMob=window.innerWidth<=768;
     var colors=['rgba(196,69,105,0.25)','rgba(212,165,165,0.18)','rgba(232,168,124,0.14)'];
     var petals=[];
     function create(){
