@@ -6,33 +6,24 @@
     <title>Te amooo coyazon</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;-moz-user-select:none}
+        *{margin:0;padding:0;box-sizing:border-box;user-select:none!important;-webkit-user-select:none!important;-moz-user-select:none!important;-ms-user-select:none!important;-webkit-touch-callout:none!important;-webkit-user-drag:none!important}
         html{scroll-behavior:smooth}
-        body{min-height:100vh;background:#0a0408;font-family:'Quicksand',sans-serif;overflow-x:hidden;color:#fff;position:relative}
+        body{min-height:100vh;background:#0a0408;font-family:'Quicksand',sans-serif;overflow-x:hidden;color:#fff;position:relative;-webkit-tap-highlight-color:transparent}
+        img{-webkit-user-drag:none!important;user-drag:none!important;-webkit-touch-callout:none!important}
 
-        .bg-gradient{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#1a0a12,#0e0515,#0a0818,#050210,#12060d,#0d0310);background-size:600% 600%;animation:bgMove 25s ease infinite}
-        @keyframes bgMove{0%{background-position:0% 0%}25%{background-position:100% 50%}50%{background-position:50% 100%}75%{background-position:0% 50%}100%{background-position:0% 0%}}
+        .bg-gradient{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#1a0a12,#0e0515,#0a0818,#050210,#12060d,#0d0310)}
 
         /* Nebula layers */
-        .nebula{position:fixed;inset:0;z-index:0;pointer-events:none}
-        .nebula::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 30%,rgba(100,20,80,0.08),transparent),radial-gradient(ellipse 60% 40% at 75% 70%,rgba(30,10,80,0.06),transparent);animation:nebulaDrift 30s ease-in-out infinite alternate}
-        .nebula::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 60% 20%,rgba(196,69,105,0.04),transparent),radial-gradient(ellipse 70% 30% at 30% 80%,rgba(100,40,150,0.04),transparent);animation:nebulaDrift2 35s ease-in-out infinite alternate}
-        @keyframes nebulaDrift{0%{opacity:0.6;transform:scale(1) translate(0,0)}100%{opacity:1;transform:scale(1.1) translate(20px,-15px)}}
-        @keyframes nebulaDrift2{0%{opacity:0.4;transform:scale(1.05) translate(0,0)}100%{opacity:0.8;transform:scale(1) translate(-15px,20px)}}
+        .nebula{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 20% 30%,rgba(100,20,80,0.08),transparent),radial-gradient(ellipse 60% 40% at 75% 70%,rgba(30,10,80,0.06),transparent)}
 
-        .orb{position:fixed;border-radius:50%;filter:blur(110px);opacity:0.1;pointer-events:none;z-index:0}
-        .orb-1{width:650px;height:650px;background:radial-gradient(circle,#c44569,transparent 70%);top:-15%;left:-10%;animation:orbDrift1 18s ease-in-out infinite alternate}
-        .orb-2{width:550px;height:550px;background:radial-gradient(circle,#6b2fa0,transparent 70%);top:35%;right:-12%;animation:orbDrift2 22s ease-in-out infinite alternate}
-        .orb-3{width:600px;height:600px;background:radial-gradient(circle,#d4a5a5,transparent 70%);bottom:-15%;left:25%;animation:orbDrift3 20s ease-in-out infinite alternate}
-        .orb-4{width:400px;height:400px;background:radial-gradient(circle,#893168,transparent 70%);top:60%;left:10%;animation:orbDrift1 25s ease-in-out infinite alternate-reverse}
-        .orb-5{width:300px;height:300px;background:radial-gradient(circle,#4a1a6b,transparent 70%);top:20%;left:50%;animation:orbDrift2 28s ease-in-out infinite alternate-reverse}
-        @keyframes orbDrift1{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,-40px) scale(1.15)}}
-        @keyframes orbDrift2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-50px,50px) scale(1.1)}}
-        @keyframes orbDrift3{0%{transform:translate(0,0) scale(0.95)}100%{transform:translate(40px,-30px) scale(1.1)}}
+        .orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:0.08;pointer-events:none;z-index:0}
+        .orb-1{width:500px;height:500px;background:radial-gradient(circle,#c44569,transparent 70%);top:-15%;left:-10%}
+        .orb-2{width:450px;height:450px;background:radial-gradient(circle,#6b2fa0,transparent 70%);top:35%;right:-12%}
+        .orb-3{width:500px;height:500px;background:radial-gradient(circle,#d4a5a5,transparent 70%);bottom:-15%;left:25%}
 
         .stars{position:fixed;inset:0;pointer-events:none;z-index:1}
-        .star{position:absolute;background:rgba(255,220,200,0.85);border-radius:50%;animation:twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s)}
-        @keyframes twinkle{0%,100%{opacity:0.1;transform:scale(0.7)}50%{opacity:1;transform:scale(1.3)}}
+        .star{position:absolute;background:rgba(255,220,200,0.85);border-radius:50%;will-change:opacity;animation:twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s)}
+        @keyframes twinkle{0%,100%{opacity:0.1}50%{opacity:1}}
 
         /* Constelacion Libra */
         .constellation{position:fixed;pointer-events:none;z-index:1;opacity:0.35;animation:constellationFade 8s ease-in-out infinite alternate}
@@ -43,23 +34,17 @@
         .constellation .star-glow{fill:none;stroke:rgba(255,255,255,0.3);stroke-width:2}
         .libra-label{font-family:'Lora',serif;fill:rgba(255,255,255,0.3);font-size:6px;font-style:italic}
 
-        /* Cometas mejorados */
-        .comet{position:fixed;pointer-events:none;z-index:1;width:3px;height:3px;background:#fff;border-radius:50%;opacity:0;animation:cometFly var(--dur,6s) linear infinite var(--delay,0s);box-shadow:0 0 6px 2px rgba(255,255,255,0.5)}
-        .comet::before{content:'';position:absolute;top:50%;left:50%;width:100px;height:1.5px;background:linear-gradient(90deg,rgba(255,255,255,0.9),rgba(232,168,124,0.6),rgba(196,69,105,0.3),transparent);transform-origin:left center;transform:translateY(-50%) rotate(var(--angle,215deg));border-radius:2px}
-        .comet::after{content:'';position:absolute;top:50%;left:50%;width:60px;height:3px;background:linear-gradient(90deg,rgba(255,255,255,0.3),transparent);transform-origin:left center;transform:translateY(-50%) rotate(var(--angle,215deg));border-radius:2px;filter:blur(1px)}
-        @keyframes cometFly{0%{opacity:0;transform:translate(0,0)}2%{opacity:1}12%{opacity:0.9}18%{opacity:0;transform:translate(var(--dx,-400px),var(--dy,400px))}100%{opacity:0;transform:translate(var(--dx,-400px),var(--dy,400px))}}
-
-        /* Shooting stars - extra */
-        .shooting-star{position:fixed;pointer-events:none;z-index:1;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0;animation:shootingStar var(--dur,3s) linear infinite var(--delay,0s)}
-        .shooting-star::before{content:'';position:absolute;top:0;left:0;width:50px;height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.8),transparent);transform:rotate(var(--angle,220deg));transform-origin:left}
-        @keyframes shootingStar{0%{opacity:0;transform:translate(0,0)}5%{opacity:1}15%{opacity:0;transform:translate(var(--dx,-200px),var(--dy,200px))}100%{opacity:0}}
+        /* Cometas */
+        .comet{position:fixed;pointer-events:none;z-index:1;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0;will-change:transform,opacity;animation:cometFly var(--dur,6s) linear infinite var(--delay,0s)}
+        .comet::before{content:'';position:absolute;top:50%;left:50%;width:80px;height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.8),rgba(196,69,105,0.3),transparent);transform-origin:left center;transform:translateY(-50%) rotate(var(--angle,215deg))}
+        @keyframes cometFly{0%{opacity:0;transform:translate3d(0,0,0)}2%{opacity:1}15%{opacity:0;transform:translate3d(var(--dx,-400px),var(--dy,400px),0)}100%{opacity:0;transform:translate3d(var(--dx,-400px),var(--dy,400px),0)}}
 
         .particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
-        .particle{position:absolute;border-radius:50%;animation:particleFloat var(--dur,12s) ease-in-out infinite var(--delay,0s)}
-        @keyframes particleFloat{0%,100%{transform:translateY(0) translateX(0);opacity:0.2}25%{transform:translateY(-30vh) translateX(15px);opacity:0.5}50%{transform:translateY(-60vh) translateX(-10px);opacity:0.3}75%{transform:translateY(-85vh) translateX(8px);opacity:0.15}100%{transform:translateY(-100vh);opacity:0}}
+        .particle{position:absolute;border-radius:50%;will-change:transform,opacity;animation:particleFloat var(--dur,12s) ease-in-out infinite var(--delay,0s)}
+        @keyframes particleFloat{0%,100%{transform:translate3d(0,0,0);opacity:0.2}50%{transform:translate3d(10px,-60vh,0);opacity:0.4}100%{transform:translate3d(-5px,-100vh,0);opacity:0}}
 
-        .petal{position:fixed;pointer-events:none;z-index:1;opacity:0;border-radius:50% 0 50% 50%;animation:fallPetal var(--dur,12s) linear infinite var(--delay,0s)}
-        @keyframes fallPetal{0%{opacity:0;transform:translateY(-5vh) rotate(0deg)}8%{opacity:0.4}50%{transform:translateY(50vh) rotate(200deg) translateX(30px)}100%{opacity:0;transform:translateY(105vh) rotate(400deg) translateX(-20px)}}
+        .petal{position:fixed;pointer-events:none;z-index:1;opacity:0;border-radius:50% 0 50% 50%;will-change:transform,opacity;animation:fallPetal var(--dur,12s) linear infinite var(--delay,0s)}
+        @keyframes fallPetal{0%{opacity:0;transform:translate3d(0,-5vh,0) rotate(0deg)}8%{opacity:0.35}100%{opacity:0;transform:translate3d(20px,105vh,0) rotate(360deg)}}
 
         .main-content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center}
         .hero-section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
@@ -85,7 +70,7 @@
         .subtitle{font-family:'Lora',serif;font-style:italic;font-size:1.15rem;color:rgba(232,168,124,0.5);text-align:center;margin-bottom:28px;letter-spacing:2px}
         .decorative-line{width:140px;height:1px;background:linear-gradient(90deg,transparent,rgba(196,69,105,0.4),rgba(232,168,124,0.3),transparent);margin:16px 0}
 
-        .love-message{max-width:580px;text-align:center;padding:38px 32px;background:linear-gradient(145deg,rgba(196,69,105,0.04),rgba(15,8,12,0.5));border-radius:20px;backdrop-filter:blur(12px);border:1px solid rgba(196,69,105,0.08);margin-bottom:25px;box-shadow:0 20px 50px rgba(0,0,0,0.15)}
+        .love-message{max-width:580px;text-align:center;padding:38px 32px;background:linear-gradient(145deg,rgba(196,69,105,0.06),rgba(15,8,12,0.6));border-radius:20px;border:1px solid rgba(196,69,105,0.08);margin-bottom:25px;box-shadow:0 20px 50px rgba(0,0,0,0.15)}
         .love-message p{font-family:'Quicksand',sans-serif;color:rgba(255,228,218,0.82);font-size:1.02rem;line-height:1.95;font-weight:300;margin-bottom:12px}
         .love-message .highlight{color:#e8a87c;font-weight:600}
         .small-hearts{display:flex;gap:18px;margin:20px 0}
@@ -164,7 +149,7 @@
         /* Reasons */
         .reasons-section{width:100%;padding:20px 20px 60px}
         .reasons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;max-width:880px;margin:0 auto}
-        .reason-card{background:linear-gradient(145deg,rgba(196,69,105,0.05),rgba(15,8,12,0.45));border:1px solid rgba(196,69,105,0.08);border-radius:16px;padding:26px 22px;backdrop-filter:blur(8px);transition:all 0.5s;opacity:0;transform:translateY(20px);animation:cardIn 0.6s ease forwards;animation-delay:var(--delay,0s);animation-play-state:paused}
+        .reason-card{background:linear-gradient(145deg,rgba(196,69,105,0.05),rgba(15,8,12,0.55));border:1px solid rgba(196,69,105,0.08);border-radius:16px;padding:26px 22px;transition:all 0.5s;opacity:0;transform:translateY(20px);animation:cardIn 0.6s ease forwards;animation-delay:var(--delay,0s);animation-play-state:paused}
         .reason-card.visible{animation-play-state:running}
         .reason-card:hover{transform:translateY(-4px) scale(1.02);border-color:rgba(196,69,105,0.2);box-shadow:0 12px 35px rgba(196,69,105,0.08)}
         @keyframes cardIn{to{opacity:1;transform:translateY(0)}}
@@ -172,7 +157,7 @@
         .reason-card p{font-family:'Quicksand',sans-serif;color:rgba(255,225,215,0.7);font-size:0.95rem;line-height:1.6;font-weight:300}
 
         /* Counter mejorado */
-        .love-counter{background:linear-gradient(145deg,rgba(196,69,105,0.06),rgba(12,6,10,0.5));padding:45px 40px;border-radius:24px;margin:50px 20px;border:1px solid rgba(196,69,105,0.1);text-align:center;backdrop-filter:blur(12px);position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+        .love-counter{background:linear-gradient(145deg,rgba(196,69,105,0.06),rgba(12,6,10,0.6));padding:45px 40px;border-radius:24px;margin:50px 20px;border:1px solid rgba(196,69,105,0.1);text-align:center;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
         .love-counter::before{content:'';position:absolute;inset:-2px;border-radius:24px;background:linear-gradient(135deg,rgba(196,69,105,0.15),transparent,rgba(232,168,124,0.1));z-index:-1;animation:counterBorderGlow 5s ease-in-out infinite}
         @keyframes counterBorderGlow{0%,100%{opacity:0.3}50%{opacity:0.7}}
         .counter-title{font-family:'Dancing Script',cursive;font-size:1.8rem;color:rgba(232,168,124,0.8);margin-bottom:25px;font-weight:500;letter-spacing:1px}
@@ -289,7 +274,9 @@
         @keyframes splashRingExpand{0%{width:0;height:0;opacity:1}60%{opacity:0.6}100%{width:200vmax;height:200vmax;opacity:0}}
         .splash-flash{position:fixed;inset:0;z-index:99997;pointer-events:none;background:radial-gradient(circle,rgba(255,220,200,0.9),rgba(196,69,105,0.4),transparent 70%);animation:splashFlash 1s ease-out forwards}
         @keyframes splashFlash{0%{opacity:0;transform:scale(0.3)}15%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
-        .splash-particle{position:fixed;z-index:99998;pointer-events:none;border-radius:50%}
+        .splash-particle{position:fixed;z-index:99998;pointer-events:none;border-radius:50%;will-change:transform,opacity}
+        .splash-fragment{will-change:transform,opacity}
+        .splash-ring{will-change:transform,opacity}
         @keyframes particleBurst{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--px),var(--py)) scale(0)}}
         .splash-bg-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
         .splash-bg-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(196,69,105,0.18),transparent 70%);top:-10%;left:-15%;animation:splashOrb 8s ease-in-out infinite alternate}
@@ -355,8 +342,6 @@
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
-<div class="orb orb-4"></div>
-<div class="orb orb-5"></div>
 <div class="stars" id="stars"></div>
 <div class="particles" id="particles"></div>
 
@@ -625,48 +610,43 @@
 
 <div class="lightbox" id="lightbox"><button class="close-lb" id="closeLb">&#10005;</button><button class="lb-prev" id="lbPrev">&#10094;</button><img src="" alt="" id="lightboxImg"><button class="lb-next" id="lbNext">&#10095;</button></div>
 <script>
-// Stars + comets + shooting stars
+// Prevenir selección y drag
+document.addEventListener('selectstart',function(e){e.preventDefault()},false);
+document.addEventListener('contextmenu',function(e){e.preventDefault()},false);
+document.addEventListener('dragstart',function(e){e.preventDefault()},false);
+document.addEventListener('mousedown',function(e){if(e.detail>1)e.preventDefault()},false);
+// Bloquear long press en móvil
+var longPressTimer;
+document.addEventListener('touchstart',function(e){longPressTimer=setTimeout(function(){e.preventDefault()},400)},{passive:false});
+document.addEventListener('touchend',function(){clearTimeout(longPressTimer)});
+document.addEventListener('touchmove',function(){clearTimeout(longPressTimer)});
+
+// Stars + comets (optimizado)
 (function(){
     var s=document.getElementById('stars');
-    for(var i=0;i<160;i++){
+    for(var i=0;i<60;i++){
         var d=document.createElement('div');
         d.className='star';
         d.style.left=Math.random()*100+'%';
         d.style.top=Math.random()*100+'%';
-        d.style.setProperty('--dur',(Math.random()*2+2)+'s');
-        d.style.setProperty('--delay',Math.random()*4+'s');
-        d.style.width=d.style.height=(Math.random()*2.5+0.5)+'px';
+        d.style.setProperty('--dur',(Math.random()*3+3)+'s');
+        d.style.setProperty('--delay',Math.random()*5+'s');
+        d.style.width=d.style.height=(Math.random()*2+0.8)+'px';
         s.appendChild(d);
     }
-    // Cometas grandes
-    for(var i=0;i<8;i++){
+    for(var i=0;i<3;i++){
         var c=document.createElement('div');
         c.className='comet';
         c.style.left=(Math.random()*50+40)+'%';
         c.style.top=(Math.random()*40)+'%';
         var angle=200+Math.random()*40;
         c.style.setProperty('--angle',angle+'deg');
-        c.style.setProperty('--dur',(Math.random()*5+6)+'s');
+        c.style.setProperty('--dur',(Math.random()*5+8)+'s');
         c.style.setProperty('--delay',(Math.random()*15)+'s');
         var rad=angle*Math.PI/180;
-        c.style.setProperty('--dx',(Math.cos(rad)*450)+'px');
-        c.style.setProperty('--dy',(Math.sin(rad)*450)+'px');
+        c.style.setProperty('--dx',(Math.cos(rad)*400)+'px');
+        c.style.setProperty('--dy',(Math.sin(rad)*400)+'px');
         s.appendChild(c);
-    }
-    // Estrellas fugaces extra
-    for(var i=0;i<5;i++){
-        var ss=document.createElement('div');
-        ss.className='shooting-star';
-        ss.style.left=(Math.random()*70+20)+'%';
-        ss.style.top=(Math.random()*30+5)+'%';
-        var angle=210+Math.random()*30;
-        ss.style.setProperty('--angle',angle+'deg');
-        ss.style.setProperty('--dur',(Math.random()*3+4)+'s');
-        ss.style.setProperty('--delay',(Math.random()*20)+'s');
-        var rad=angle*Math.PI/180;
-        ss.style.setProperty('--dx',(Math.cos(rad)*250)+'px');
-        ss.style.setProperty('--dy',(Math.sin(rad)*250)+'px');
-        s.appendChild(ss);
     }
 })();
 
@@ -684,39 +664,42 @@
     }
 })();
 
-// Particles
+// Particles (reducidos)
 (function(){
     var c=document.getElementById('particles');
-    for(var i=0;i<25;i++){
+    for(var i=0;i<10;i++){
         var p=document.createElement('div');
         p.className='particle';
         p.style.left=Math.random()*100+'%';
         p.style.top=(80+Math.random()*20)+'%';
-        p.style.width=p.style.height=(Math.random()*3+1)+'px';
-        p.style.background=['rgba(196,69,105,0.35)','rgba(232,168,124,0.25)','rgba(212,165,165,0.3)','rgba(100,40,150,0.2)'][Math.floor(Math.random()*4)];
-        p.style.setProperty('--dur',(Math.random()*8+10)+'s');
+        p.style.width=p.style.height=(Math.random()*2.5+1)+'px';
+        p.style.background=['rgba(196,69,105,0.3)','rgba(232,168,124,0.2)','rgba(212,165,165,0.25)'][Math.floor(Math.random()*3)];
+        p.style.setProperty('--dur',(Math.random()*8+12)+'s');
         p.style.setProperty('--delay',(Math.random()*10)+'s');
         c.appendChild(p);
     }
 })();
 
-// Petals
+// Petals (reducidos)
 (function(){
-    var colors=['rgba(196,69,105,0.28)','rgba(212,165,165,0.2)','rgba(232,168,124,0.16)','rgba(150,50,100,0.15)'];
+    var colors=['rgba(196,69,105,0.25)','rgba(212,165,165,0.18)','rgba(232,168,124,0.14)'];
+    var petals=[];
     function create(){
+        if(petals.length>=3){var old=petals.shift();if(old.parentNode)old.remove()}
         var p=document.createElement('div');
         p.classList.add('petal');
         p.style.left=Math.random()*100+'vw';
-        p.style.width=(Math.random()*8+5)+'px';
-        p.style.height=(Math.random()*6+4)+'px';
+        p.style.width=(Math.random()*7+5)+'px';
+        p.style.height=(Math.random()*5+4)+'px';
         p.style.background=colors[Math.floor(Math.random()*colors.length)];
-        p.style.setProperty('--dur',(Math.random()*6+10)+'s');
-        p.style.setProperty('--delay',(Math.random()*4)+'s');
+        p.style.setProperty('--dur',(Math.random()*6+12)+'s');
+        p.style.setProperty('--delay','0s');
         document.body.appendChild(p);
-        setTimeout(function(){p.remove()},18000);
+        petals.push(p);
+        setTimeout(function(){if(p.parentNode)p.remove();var idx=petals.indexOf(p);if(idx>-1)petals.splice(idx,1)},18000);
     }
-    setInterval(create,3000);
-    for(var i=0;i<5;i++) setTimeout(create,i*600);
+    setInterval(create,6000);
+    create();
 })();
 
 // Heart explosion
@@ -865,7 +848,7 @@ function openPage(){
 
     // Particulas de explosion
     var colors=['#c44569','#e8a87c','#d4a5a5','#f5c6c6','#893168','#ffd6e0','#6b2fa0'];
-    for(var i=0;i<60;i++){
+    for(var i=0;i<30;i++){
         var p=document.createElement('div');
         p.className='splash-particle';
         var size=Math.random()*8+3;
@@ -880,7 +863,7 @@ function openPage(){
 
     // Fragmentos que salen volando (como vidrio roto)
     var fragColors=['rgba(42,10,30,0.8)','rgba(14,2,18,0.7)','rgba(196,69,105,0.3)','rgba(107,47,160,0.25)'];
-    for(var i=0;i<35;i++){
+    for(var i=0;i<20;i++){
         var f=document.createElement('div');
         f.className='splash-fragment';
         var w=30+Math.random()*80;
