@@ -254,6 +254,32 @@
             .counter-item{min-width:100%;padding:8px}
         }
 
+        /* MOBILE: desactivar animaciones pesadas */
+        @media(max-width:768px){
+            .heart-svg{filter:none!important;animation:heartbeat 2s ease-in-out infinite}
+            .heart-outer-ring,.heart-inner-ring,.heart-glow,.heart-pulse-ring{display:none!important}
+            .title{animation:none!important;background:linear-gradient(135deg,#f5c6c6,#e8a87c);-webkit-background-clip:text;background-clip:text}
+            .rose-glow{animation:none!important;display:none}
+            .rose-svg{filter:none!important;transition:transform 0.3s}
+            .pony-side{display:none!important}
+            .stars{display:none!important}
+            .particles{display:none!important}
+            .petal{display:none!important}
+            .nebula{display:none!important}
+            .orb{display:none!important}
+            .constellation{display:none!important}
+            .rose-modal{backdrop-filter:none!important}
+            .modal-glow{display:none!important}
+            .rose-modal-content{box-shadow:none!important}
+            .mini-heart{animation:bounceH 2s ease-in-out infinite}
+            .rose-hint{animation:none!important;opacity:0.8}
+            .splash-bg-orb{display:none!important}
+            .splash-sparkles{display:none!important}
+            .carousel-item img{transition:none!important}
+            .polaroid{transition:none!important}
+            .comet{display:none!important}
+        }
+
         /* Splash Intro */
         .splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#1a0a18,#0a0408);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 1.2s ease,visibility 1.2s}
         .splash.hidden{opacity:0;visibility:hidden;pointer-events:none}
@@ -263,17 +289,17 @@
         /* Splash Intro */
         .splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 60%,#2a0a1e 0%,#0e0212 50%,#050108 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:none}
         .splash.dissolving{pointer-events:none}
-        .splash.dissolving .splash-inner{animation:splashDissolveContent 0.8s ease forwards}
-        .splash.dissolving .splash-bg-orb{animation:splashOrbExplode 1.2s ease forwards}
+        .splash.dissolving .splash-inner{animation:splashDissolveContent 0.7s ease forwards}
+        .splash.dissolving .splash-bg-orb{animation:splashOrbExplode 0.7s ease forwards}
         .splash.hidden{opacity:0;pointer-events:none}
-        @keyframes splashDissolveContent{0%{opacity:1;transform:scale(1);filter:blur(0)}40%{opacity:0.8;transform:scale(1.08);filter:blur(0)}100%{opacity:0;transform:scale(1.5);filter:blur(12px)}}
-        @keyframes splashOrbExplode{0%{transform:scale(1);opacity:1}100%{transform:scale(3);opacity:0}}
+        @keyframes splashDissolveContent{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.06)}}
+        @keyframes splashOrbExplode{0%{opacity:1}100%{opacity:0}}
         .splash-fragment{position:fixed;z-index:99998;pointer-events:none;border-radius:3px}
-        @keyframes fragmentFly{0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}100%{opacity:0;transform:translate(var(--fx),var(--fy)) rotate(var(--fr)) scale(0)}}
-        .splash-ring{position:fixed;z-index:99998;pointer-events:none;border-radius:50%;border:2px solid rgba(232,168,124,0.6);animation:splashRingExpand 1.4s ease-out forwards}
-        @keyframes splashRingExpand{0%{width:0;height:0;opacity:1}60%{opacity:0.6}100%{width:200vmax;height:200vmax;opacity:0}}
-        .splash-flash{position:fixed;inset:0;z-index:99997;pointer-events:none;background:radial-gradient(circle,rgba(255,220,200,0.9),rgba(196,69,105,0.4),transparent 70%);animation:splashFlash 1s ease-out forwards}
-        @keyframes splashFlash{0%{opacity:0;transform:scale(0.3)}15%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
+        @keyframes fragmentFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--fx),var(--fy)) scale(0)}}
+        .splash-ring{position:fixed;z-index:99998;pointer-events:none;border-radius:50%;border:1px solid rgba(232,168,124,0.4);animation:splashRingExpand 1s ease-out forwards}
+        @keyframes splashRingExpand{0%{width:0;height:0;opacity:0.8}100%{width:180vmax;height:180vmax;opacity:0}}
+        .splash-flash{position:fixed;inset:0;z-index:99997;pointer-events:none;background:radial-gradient(circle,rgba(255,220,200,0.5),rgba(196,69,105,0.15),transparent 65%);animation:splashFlash 0.7s ease-out forwards}
+        @keyframes splashFlash{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
         .splash-particle{position:fixed;z-index:99998;pointer-events:none;border-radius:50%;will-change:transform,opacity}
         .splash-fragment{will-change:transform,opacity}
         .splash-ring{will-change:transform,opacity}
@@ -664,8 +690,9 @@ document.addEventListener('touchmove',function(){clearTimeout(longPressTimer)});
     }
 })();
 
-// Particles (reducidos)
+// Particles (solo desktop)
 (function(){
+    if(window.innerWidth<=768)return;
     var c=document.getElementById('particles');
     for(var i=0;i<10;i++){
         var p=document.createElement('div');
@@ -680,8 +707,9 @@ document.addEventListener('touchmove',function(){clearTimeout(longPressTimer)});
     }
 })();
 
-// Petals (reducidos)
+// Petals (solo desktop)
 (function(){
+    if(window.innerWidth<=768)return;
     var colors=['rgba(196,69,105,0.25)','rgba(212,165,165,0.18)','rgba(232,168,124,0.14)'];
     var petals=[];
     function create(){
@@ -824,19 +852,22 @@ function openPage(){
     if(splash.classList.contains('dissolving'))return;
     splash.classList.add('dissolving');
 
-    // Flash de luz central
+    var isMobile=window.innerWidth<=768;
+
+    // Flash suave
     var flash=document.createElement('div');
     flash.className='splash-flash';
     document.body.appendChild(flash);
-    setTimeout(function(){flash.remove()},1100);
+    setTimeout(function(){flash.remove()},800);
 
-    // Anillo expansivo
+    // Un solo anillo limpio
     var ring=document.createElement('div');
     ring.className='splash-ring';
     ring.style.cssText='top:50%;left:50%;transform:translate(-50%,-50%)';
     document.body.appendChild(ring);
-    setTimeout(function(){ring.remove()},1500);
+    setTimeout(function(){ring.remove()},1100);
 
+    if(!isMobile){
     // Segundo anillo con delay
     setTimeout(function(){
         var ring2=document.createElement('div');
@@ -844,8 +875,9 @@ function openPage(){
         ring2.style.cssText='top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(196,69,105,0.5);animation-duration:1.6s';
         document.body.appendChild(ring2);
         setTimeout(function(){ring2.remove()},1700);
-    },150);
+    },150);}
 
+    if(!isMobile){
     // Particulas de explosion
     var colors=['#c44569','#e8a87c','#d4a5a5','#f5c6c6','#893168','#ffd6e0','#6b2fa0'];
     for(var i=0;i<30;i++){
@@ -861,6 +893,9 @@ function openPage(){
         (function(el){setTimeout(function(){el.remove()},2000)})(p);
     }
 
+    } // fin if !isMobile particulas
+
+    if(!isMobile){
     // Fragmentos que salen volando (como vidrio roto)
     var fragColors=['rgba(42,10,30,0.8)','rgba(14,2,18,0.7)','rgba(196,69,105,0.3)','rgba(107,47,160,0.25)'];
     for(var i=0;i<20;i++){
@@ -878,21 +913,23 @@ function openPage(){
         (function(el){setTimeout(function(){el.remove()},1500)})(f);
     }
 
+    } // fin if !isMobile fragmentos
+
     // Corazoncitos que explotan desde el centro
-    setTimeout(function(){
+    if(!isMobile) setTimeout(function(){
         createHeartExplosion(window.innerWidth/2,window.innerHeight/2);
     },200);
 
-    // Fade out del fondo splash
+    // Fade out limpio
     setTimeout(function(){
-        splash.style.transition='opacity 0.6s ease';
+        splash.style.transition='opacity 0.5s ease';
         splash.classList.add('hidden');
         document.body.style.overflow='';
         music.volume=0.4;
         music.play().catch(function(){});
-    },600);
+    },400);
 
-    setTimeout(function(){splash.style.display='none'},1400);
+    setTimeout(function(){splash.style.display='none'},1000);
 }
 </script>
 </body>
